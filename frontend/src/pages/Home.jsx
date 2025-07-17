@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllPosts } from '../features/post/postThunk';
 import { useNavigate } from 'react-router-dom';
@@ -29,14 +30,27 @@ export default function HomePage() {
     if (error) return <Typography color="error">{error}</Typography>;
 
     return (
-        <Box sx={{ p: 3 }}>
-            <Typography variant="h4" gutterBottom>
+        <Box
+            sx={{ p: 3 }}
+            component={motion.div}
+            initial={{ opacity: 0, y: 32 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: 'easeOut' }}
+        >
+            <Typography
+                variant="h4"
+                gutterBottom
+                component={motion.div}
+                initial={{ x: -32, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ delay: 0.2, duration: 0.5 }}
+            >
                 All Posts
             </Typography>
 
             {Array.isArray(allPosts) && allPosts.length > 0 ? (
                 allPosts.map(post => (
-                    <Card key={post.id} sx={{ mb: 2 }}>
+                    <Card key={post.id} sx={{ mb: 2 }} component={motion.div} whileHover={{ scale: 1.03, boxShadow: '0 6px 32px rgba(25, 118, 210, 0.15)' }} transition={{ type: 'spring', stiffness: 300 }}>
                         <CardContent>
                             <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1 }}>
                                 <Avatar src={getImageUrl(post.user?.profileImage)} alt={post.user?.firstName || ""} sx={{ width: 32, height: 32 }} />
@@ -52,7 +66,7 @@ export default function HomePage() {
                                 {new Date(post.createdAt).toLocaleString()}
                             </Typography>
                             <Stack direction="row" spacing={2}>
-                                <Button variant="outlined" size="small" onClick={() => navigate(`/post/${post.id}`)}>
+                                <Button variant="outlined" size="small" onClick={() => navigate(`/post/${post.id}`)} component={motion.button} whileHover={{ scale: 1.1, backgroundColor: '#1976d2', color: '#fff' }} transition={{ type: 'spring', stiffness: 300 }}>
                                     Read More
                                 </Button>
                             </Stack>
