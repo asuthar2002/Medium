@@ -1,0 +1,62 @@
+# Node.js dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# dotenv environment variables
+.env
+.env.local
+.env.*.local
+
+# Build output
+dist/
+build/
+out/
+coverage/
+*.tsbuildinfo
+
+# Logs
+logs/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Uploaded files (if you store uploads locally)
+uploads/
+
+# Frontend specific
+frontend/node_modules/
+frontend/build/
+frontend/dist/
+frontend/.env
+frontend/.env.local
+
+# Backend specific
+backend/node_modules/
+backend/build/
+backend/dist/
+backend/.env
+backend/.env.local
+
+# Misc
+*.swp
+*.swo
+
+# Ignore SQLite, MySQL, or other DB files if present
+*.sqlite
+*.sqlite3
+*.db
+*.mysql
+
+# Ignore coverage output
+coverage/
