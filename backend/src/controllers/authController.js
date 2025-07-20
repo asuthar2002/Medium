@@ -43,8 +43,6 @@ export const sendOtp = async (req, res) => {
 export const register = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
-    console.log("Uploaded file info:", req.file);
-    console.log(req.body)
     const { email, password, confirmPassword, firstName, lastName, adminInviteCode } = req.body;
 
     if (!firstName || !lastName || !email || !password || !confirmPassword) {
@@ -181,7 +179,6 @@ export const fetchUser = async (req, res) => {
         }
 
         const token = authHeader.split(' ')[1];
-        console.log(token)
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
         const user = await User.findByPk(decoded.id, {

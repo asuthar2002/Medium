@@ -25,7 +25,7 @@ export default function Login() {
             dispatch(setUserFromToken(token));
             navigate('/', { replace: true });
         }
-    }, [navigate]);
+    }, [dispatch, navigate]);
 
     const { loading, error, user } = useSelector((state) => state.auth);
     const { register, handleSubmit, formState: { errors }, } = useForm();

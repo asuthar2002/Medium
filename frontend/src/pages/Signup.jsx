@@ -2,7 +2,6 @@ import { Box, Button, Stack, TextField, Typography, Paper, InputAdornment, IconB
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,8 +11,8 @@ import { signupUser } from "../features/auth/authThunk";
 export default function Signup() {
 
     const dispatch = useDispatch();
-    const { error, loading, user } = useSelector((state) => state.auth);
-    const { register, handleSubmit, formState: { errors, isSubmitting }, } = useForm();
+    const { loading, user } = useSelector((state) => state.auth);
+    const { register, handleSubmit, formState: { errors }, } = useForm();
     const [selectedFile, setSelectedFile] = useState(null);
     const [adminInviteCode, setAdminInviteCode] = useState("");
 
@@ -33,7 +32,9 @@ export default function Signup() {
             setImagePreview(null);
         }
     };
-
+    useEffect(() => {
+        if (user) { navigate("/", { replace: true }); }
+    }, [user, navigate]);
     const onSubmit = async (data) => {
         setErrorMsg("");
         setSuccessMsg("");
@@ -51,9 +52,7 @@ export default function Signup() {
         formData.append("confirmPassword", data.confirmPassword);
         formData.append("profileImage", selectedFile);
         if (adminInviteCode) formData.append("adminInviteCode", adminInviteCode);
-        useEffect(() => {
-            if (user) { navigate("/", { replace: true }); }
-        }, [user, navigate]);
+
         try {
             const result = await dispatch(signupUser(formData)).unwrap();
             if (result.status === "otp_resent" || result.status.includes("otp_resent") || result.status === "otp_sent" || result.status.includes("otp_sent")) {

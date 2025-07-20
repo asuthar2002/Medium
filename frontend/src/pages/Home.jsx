@@ -3,23 +3,13 @@ import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllPosts } from '../features/post/postThunk';
 import { useNavigate } from 'react-router-dom';
-import {
-    Box,
-    Card,
-    CardContent,
-    Typography,
-    Button,
-    CircularProgress,
-    Stack,
-    Pagination,
-    Avatar,
-} from '@mui/material';
+import { Box, Card, CardContent, Typography, Button, CircularProgress, Stack, Pagination, Avatar, } from '@mui/material';
 import getImageUrl from '../utils/getImageUrl';
 
 export default function HomePage() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { allPosts, loading, error, total, page: currentPage, pageSize } = useSelector(state => state.posts);
+    const { allPosts, loading, error, total, pageSize } = useSelector(state => state.posts);
     const [page, setPage] = React.useState(1);
 
     useEffect(() => {

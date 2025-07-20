@@ -4,7 +4,6 @@ import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import rateLimit from 'express-rate-limit';
-import { sequelize } from './models/index.js';
 import passport from './passport.js';
 import authRoutes from './routes/auth.js';
 import userRoutes from './routes/user.js';
@@ -12,6 +11,7 @@ import postRoutes from './routes/post.js';
 import googleAuthRoutes from './routes/googleAuth.js';
 import adminRoutes from './routes/admin.js';
 import cookieParser from "cookie-parser";
+import { connectDB } from './config/connectDB.js';
 
 dotenv.config();
 
@@ -21,6 +21,7 @@ const __dirname = path.dirname(__filename);
 
 
 const app = express();
+connectDB();
 app.use(cookieParser());
 
 app.use(cors({
@@ -42,22 +43,9 @@ app.use('/api/auth/google', googleAuthRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/posts', postRoutes);
 
-app.get('/', (req, res) => res.json({ message: '✅ MERN Backend API Running' }));
+app.get('/', (req, res) => res.json({ message: ' MERN Backend API Running' }));
 
 const PORT = process.env.PORT || 5000;
-
-(async () => {
-  try {
-    await sequelize.authenticate();
-    console.log(' Connected to MySQL');
-
-    await sequelize.sync({ alter: true });
-
-    app.listen(PORT, () => {
-      console.log(`Server running on http://localhost:${PORT}`);
-    });
-  } catch (error) {
-    console.error('Database connection failed:', error.message);
-    process.exit(1);
-  }
-})();
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
